@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { colors, apiKeys } = require("../../../config");
-const { nasaKey } = apiKeys;
+// eslint-disable-next-line no-undef
+const nasaKey = process.env.nasaKey
 const { color } = colors;
 const { MessageEmbed } = require("discord.js");
 const axios = require("axios");
@@ -66,10 +67,9 @@ module.exports = {
         break;
 
       case "mars-curiosity-images":
-
-        // VERY BASIC, LOTS OF POTENTIAL THOUGH, WILL UPGRADE IN THE FUTURE.
-
+        // eslint-disable-next-line no-case-declarations
         const sol = interaction.options.getInteger("sol");
+        // eslint-disable-next-line no-case-declarations
         const reqURL =
           "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?api_key=" +
           nasaKey +

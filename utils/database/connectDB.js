@@ -1,12 +1,12 @@
 const mongoose = require('mongoose')
-const { mongoSRV } = require("../../config")
 
 async function connectDB() {
 
     console.log("[NOTICE] Connect to Database :: Attempting to connect to the MongoDB database.")
 
     try {
-        await mongoose.connect(mongoSRV, {
+        // eslint-disable-next-line no-undef
+        await mongoose.connect(process.envmongoSRV, {
             useNewUrlParser: true,
             useUnifiedTopology: true
         })

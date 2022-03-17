@@ -106,6 +106,4 @@ module.exports = {
     "919602274651766804",
     "939557164706574367",
   ],
-  mongoSRV:
-    "mongodb+srv://Grif:OwtLXOuvu4T2KDWxD9OG4RX29BlnjMQjBt4svKADdmhirtGS1MtmZAIhsVdvhFOULLXNivM0va0Z7Ti1NKilROp73P3uA7TSZP7@everyoneutils.ua4u8.mongodb.net/Everyone-Database?retryWrites=true&w=majority",
 };
