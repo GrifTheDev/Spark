@@ -1,6 +1,6 @@
 const { REST } = require("@discordjs/rest");
 const { Routes } = require("discord-api-types/v9");
-const { token, clientId, guildId } = require("../../config");
+const { clientId, guildId } = require("../../config");
 const fs = require("fs");
 
 async function deployCommands(client) {
@@ -19,7 +19,8 @@ async function deployCommands(client) {
       commands.push(command.data.toJSON());
     }
   }
-  const rest = new REST({ version: "9" }).setToken(token);
+  // eslint-disable-next-line no-undef
+  const rest = new REST({ version: "9" }).setToken(process.env.token);
 
   try {
     console.log("[NOTICE] Deploy Slash Commands :: Started refreshing application (/) commands.");
