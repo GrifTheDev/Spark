@@ -6,7 +6,7 @@ async function connectDB() {
 
     try {
         // eslint-disable-next-line no-undef
-        await mongoose.connect(process.envmongoSRV, {
+        await mongoose.connect(process.env.mongoSRV, {
             useNewUrlParser: true,
             useUnifiedTopology: true
         })
