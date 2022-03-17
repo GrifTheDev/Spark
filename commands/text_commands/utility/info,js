@@ -1,0 +1,47 @@
+const { Message, Client, MessageEmbed } = require("discord.js");
+const { infoMessages } = require("../../../messages/info_messages");
+const { emojis } = require("../../../config");
+const { XEmoji } = emojis;
+
+module.exports = {
+  name: "info",
+  desc: "Gives informational snippets for members in the server.",
+  aliases: ["i"],
+  permissionLevel: 2,
+
+  /**
+   *
+   * @param {Client} client
+   * @param {Message} message
+   * @param {String[]} args
+   */
+
+  async execute(client, message, args) {
+    if (!args[0]) {
+      return message.reply({
+        content: `${XEmoji} Please provide the name of the info snippet you want to bring up.`
+      });
+    }
+
+    var query = infoMessages[args[0].toLowerCase()];
+
+    if (query != undefined) {
+      var response = new MessageEmbed()
+        .setAuthor({
+          name: message.author.tag,
+          iconURL: message.author.displayAvatarURL({ dynamic: true })
+        })
+        .setTitle(query.title)
+        .setDescription(query.content)
+        .setColor(query.color);
+
+      return message.channel.send({
+        embeds: [response]
+      });
+    } else {
+      return message.reply({
+        content: `${XEmoji} Could not find an info snippet named **${args[0]}**. Please double check that you are requesting an info snippet that exists.`
+      });
+    }
+  }
+};
