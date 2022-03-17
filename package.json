@@ -1,0 +1,30 @@
+{
+  "name": "spark-hardhat",
+  "version": "1.0.0",
+  "description": "Testing version of Spark",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GrifTheDev/Spark.git"
+  },
+  "author": "Grif",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GrifTheDev/Spark/issues"
+  },
+  "homepage": "https://github.com/GrifTheDev/Spark#readme",
+  "dependencies": {
+    "@discordjs/builders": "^0.11.0",
+    "@discordjs/rest": "^0.2.0-canary.0",
+    "axios": "^0.24.0",
+    "discord-api-types": "^0.26.1",
+    "discord.js": "^13.5.0",
+    "mongoose": "^6.1.5"
+  },
+  "devDependencies": {
+    "eslint": "^8.7.0"
+  }
+}
