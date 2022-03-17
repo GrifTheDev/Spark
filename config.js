@@ -87,7 +87,7 @@ module.exports = {
     "884809031213006889",
     "904899912674734140",
     "904900678030340116",
-    "904900099493216259",
+    "904900099493216259", 
     "905861964268458025",
     "904902891075145738",
     "904906342618234921",
@@ -105,9 +105,6 @@ module.exports = {
     "889600496741003274",
     "919602274651766804",
     "939557164706574367",
-    "891067355839492126",
-    "891067450840453150",
-    "914459391888076840"
   ],
   mongoSRV:
     "mongodb+srv://Grif:OwtLXOuvu4T2KDWxD9OG4RX29BlnjMQjBt4svKADdmhirtGS1MtmZAIhsVdvhFOULLXNivM0va0Z7Ti1NKilROp73P3uA7TSZP7@everyoneutils.ua4u8.mongodb.net/Everyone-Database?retryWrites=true&w=majority",
