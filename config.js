@@ -62,7 +62,7 @@ module.exports = {
     achievement_gain_color: "#FFD11F",
   },
   apiKeys: {
-    nasaKey: "HyVjSUuP3i6q0Hq8oOAHBOPTzbnIbZhvhRt8Bm2l",
+    nasaKey: "",
   },
   logChannelId: "893998571681120266",
   introductionChannelId: "888066458897248257",
