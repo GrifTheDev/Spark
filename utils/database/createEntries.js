@@ -2,12 +2,16 @@ const ReputationManager = require("../../structures/ReputationManager")
 const achievementProfile = require("./schemas/achievements")
 const userProfile = require("./schemas/user")
 const { introductionChannelId } = require("../../config")
+const reputationProfile = require("./schemas/reputation")
 
-async function createRepProfile({ user: user }) {
-    await new ReputationManager({ message: user }).addProfileOnJoin({
-        memberId: user.id,
-        username: user.user.username
+async function createRepProfile({ message: message }) {
+  const query = await reputationProfile.findOne({ _id: message.author.id }).exec()
+  if (query == undefined || query == null) {
+    await new ReputationManager({ message: message }).addProfileOnJoin({
+        memberId: message.author.id,
+        username: message.author.username
       })
+  }
 }
 
 async function createUserProfile({ message: message }) {
@@ -34,12 +38,12 @@ async function createUserProfile({ message: message }) {
     }
 }
 
-async function createAchievementProfile ({ user: user }) {
-    const query = await achievementProfile.findOne({ _id: user.id  }).exec()
+async function createAchievementProfile ({ message: message }) {
+    const query = await achievementProfile.findOne({ _id: message.author.id  }).exec()
 
     if (query == undefined || query == null) {
         const creation = await achievementProfile.create({
-            _id: user.id, // member id
+            _id: message.author.id, // member id
             lockedAchievements: [
               { 
                 type: 1, 

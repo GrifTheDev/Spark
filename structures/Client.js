@@ -80,6 +80,8 @@ class BotClient extends Client {
 
       if (message.author.bot || !message.guild) return;
       await addMessageCount(message);
+      await createRepProfile(message)
+      await createAchievementProfile(message)
 
       new AchievementManager({ message: message }).helloWorld();
       new AchievementManager({ message: message }).formalities()      
