@@ -8,7 +8,7 @@ module.exports = {
     },
     bot: {
         title: "Info on Spark",
-        content: "Spark is a **private** utility bot used to power this server. Because Spark was made only with **Student Zone** in mind, it simply cannot work in other servers, nor is intended to.\n\nHowever, if you want to see how a certain feature of Spark was made, you can check out it's entire source code on Github (linkherelink)! Please note that forking the repository and running your own version of Spark **is not allowed in any way, shape or form.** Spark's code may be used to help yourself learn something about programming or to satisfy your curiosoty on how a feature was made. Any other use cases, including tutorials in any form, are not allowed. **Do not self-host Spark!**",
+        content: "Spark is a **private** utility bot used to power this server. Because Spark was made only with **Student Zone** in mind, it simply cannot work in other servers, nor is intended to.\n\nHowever, if you want to see how a certain feature of Spark was made, you can check out it's entire source code on Github (https://github.com/GrifTheDev/Spark)! Please note that forking the repository and running your own version of Spark **is not allowed in any way, shape or form.** Spark's code may be used to help yourself learn something about programming or to satisfy your curiosoty on how a feature was made. Any other use cases, including tutorials in any form, are not allowed. **Do not self-host Spark!**",
         color: "ORANGE"
     },
     rep: {

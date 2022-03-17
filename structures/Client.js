@@ -171,11 +171,6 @@ class BotClient extends Client {
 
     this.on('guildMemberAdd', async (member) => {
 
-      // createRepProfile, createUserProfile, createAchievementProfile
-      await createUserProfile({ user: member }) 
-      await createAchievementProfile({ user: member })
-      await createRepProfile({ user: member })
-
       const channelToSendIn = member.guild.channels.cache.get(generalChannelId)
 
       await channelToSendIn.send({
