@@ -1,6 +1,6 @@
 const BotClient = require("./structures/Client");
 const { Intents } = require("discord.js");
-const { token } = require("./config");
+require('dotenv').config()
 
 new BotClient({
   intents: [
