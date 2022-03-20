@@ -32,7 +32,7 @@ module.exports = {
           ch.type != "GUILD_CATEGORY" && !blacklistedLockdown.includes(ch.id)
       ).size
     );
-    var lockedChannels = 1;
+    var lockedChannels = 0;
 
     var startedLockdownMessage = new MessageEmbed()
       .setTitle(":unlock: Server Unlockdown")

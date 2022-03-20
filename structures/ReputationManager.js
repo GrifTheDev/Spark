@@ -2,7 +2,7 @@ const reputationProfile = require("../utils/database/schemas/reputation");
 const { roles, colors } = require("../config");
 const { up_color } = colors;
 // eslint-disable-next-line no-unused-vars
-const { repRoles } = roles
+const { repRoles } = roles;
 const { rep5, rep10, rep15, rep30, rep50, rep75, rep100 } = repRoles;
 const { MessageEmbed, MessageButton, MessageActionRow } = require("discord.js");
 
@@ -13,17 +13,13 @@ class ReputationManager {
     message: message,
   }) {
     if (toGive != undefined) this.toGive = toGive;
-  
+
     if (message != undefined) this.message = message;
-    
 
     this.repGiveOnPointMeet = 1;
   }
 
-  async addProfileOnJoin({
-    memberId: memberId,
-    username: username
-  }) {
+  async addProfileOnJoin({ memberId: memberId, username: username }) {
     let noProfile = await reputationProfile.create({
       _id: memberId,
       repAmount: 0,
@@ -65,8 +61,8 @@ class ReputationManager {
     const row = new MessageActionRow().addComponents(perks);
 
     // switch doesnt work :(, at least to my understading, do message me if you can find a working implementation
-    if (rep >= 5 && rep < 10) {
-      this.message.member.roles.add(rep5);
+    if (rep >= 5 && rep < 10 && !this.message.member.roles.cache.has(rep5)) {
+      await this.message.member.roles.add(rep5);
       upEmbed.setDescription(
         `:tada: Great job **${this.message.author.username}**, you have reached **5 reputation** and have been given the <@&${rep5}> role. Keep it up!`
       );
@@ -76,19 +72,29 @@ class ReputationManager {
         content: `<@${this.message.author.id}>`,
         components: [row],
       });
-    } else if (rep >= 10 && rep < 15) {
-      this.message.member.roles.add(rep10);
+    } else if (
+      rep >= 10 &&
+      rep < 15 &&
+      !this.message.member.roles.cache.has(rep10)
+    ) {
+      await this.removePrevious();
+      await this.message.member.roles.add(rep10);
       upEmbed.setDescription(
         `:tada: Great job **${this.message.author.username}**, you have reached **10 reputation** and have been given the <@&${rep10}> role. Keep it up!`
       );
 
-      this.message.channel.send({
+      await this.message.channel.send({
         embeds: [upEmbed],
         content: `<@${this.message.author.id}>`,
         components: [row],
       });
-    } else if (rep >= 15 && rep < 30) {
-      this.message.member.roles.add(rep15);
+    } else if (
+      rep >= 15 &&
+      rep < 30 &&
+      !this.message.member.roles.cache.has(rep15)
+    ) {
+      await this.removePrevious();
+      await this.message.member.roles.add(rep15);
       upEmbed.setDescription(
         `:tada: Great job **${this.message.author.username}**, you have reached **15 reputation** and have been given the <@&${rep15}> role. Keep it up!`
       );
@@ -98,8 +104,13 @@ class ReputationManager {
         content: `<@${this.message.author.id}>`,
         components: [row],
       });
-    } else if (rep >= 30 && rep < 50) {
-      this.message.member.roles.add(rep30);
+    } else if (
+      rep >= 30 &&
+      rep < 50 &&
+      !this.message.member.roles.cache.has(rep30)
+    ) {
+      await this.removePrevious();
+      await this.message.member.roles.add(rep30);
       upEmbed.setDescription(
         `:tada: Great job **${this.message.author.username}**, you have reached **30 reputation** and have been given the <@&${rep30}> role. Keep it up!`
       );
@@ -109,8 +120,13 @@ class ReputationManager {
         content: `<@${this.message.author.id}>`,
         components: [row],
       });
-    } else if (rep >= 50 && rep < 75) {
-      this.message.member.roles.add(rep50);
+    } else if (
+      rep >= 50 &&
+      rep < 75 &&
+      !this.message.member.roles.cache.has(rep50)
+    ) {
+      await this.removePrevious();
+      await this.message.member.roles.add(rep50);
       upEmbed.setDescription(
         `:tada: Great job **${this.message.author.username}**, you have reached **50 reputation** and have been given the <@&${rep50}> role. Keep it up!`
       );
@@ -120,8 +136,13 @@ class ReputationManager {
         content: `<@${this.message.author.id}>`,
         components: [row],
       });
-    } else if (rep >= 75 && rep < 100) {
-      this.message.member.roles.add(rep75);
+    } else if (
+      rep >= 75 &&
+      rep < 100 &&
+      !this.message.member.roles.cache.has(rep75)
+    ) {
+      await this.removePrevious();
+      await this.message.member.roles.add(rep75);
       upEmbed.setDescription(
         `:tada: Great job **${this.message.author.username}**, you have reached **75 reputation** and have been given the <@&${rep75}> role. Keep it up!`
       );
@@ -131,8 +152,9 @@ class ReputationManager {
         content: `<@${this.message.author.id}>`,
         components: [row],
       });
-    } else if (rep >= 100) {
-      this.message.member.roles.add(rep100);
+    } else if (rep >= 100 && !this.message.member.roles.cache.has(rep100)) {
+      await this.removePrevious();
+      await this.message.member.roles.add(rep100);
       upEmbed.setDescription(
         `:sparkles: Great job **${this.message.author.username}**, you have reached **100 reputation** and have been given the <@&${rep100}> role. Keep it up!`
       );
@@ -155,10 +177,20 @@ class ReputationManager {
     await this.message.member.roles.remove(rep75);
     await this.message.member.roles.remove(rep100);
 
-    this.giveRoles({
+    await this.giveRoles({
       rep: rep - 1, // accounting for my accounting lmao
       removed: true,
     }); //TODO: REp
+  }
+
+  async removePrevious() {
+    await this.message.member.roles.remove(rep5);
+    await this.message.member.roles.remove(rep10);
+    await this.message.member.roles.remove(rep15);
+    await this.message.member.roles.remove(rep30);
+    await this.message.member.roles.remove(rep50);
+    await this.message.member.roles.remove(rep75);
+    await this.message.member.roles.remove(rep100);
   }
 
   async givePoints() {
@@ -262,7 +294,7 @@ class ReputationManager {
 
     this.giveRoles({
       rep: query.repAmount,
-      removed: false
+      removed: false,
     });
   }
 
@@ -294,7 +326,7 @@ class ReputationManager {
       );
     }
 
-    this.removeRoles({
+    await this.removeRoles({
       rep: query.repAmount - toRemove,
     });
   }
@@ -330,7 +362,7 @@ class ReputationManager {
     }
 
     this.giveRoles({
-      rep: query.repAmount,
+      rep: query.repAmount + this.toGive,
     });
   }
 }

@@ -21,7 +21,7 @@ module.exports = {
 
   async execute(interaction, client) {
         const query = await reputationProfile.findOne({ _id: interaction.user.id }).exec()
-
+        
         await interaction.followUp({
             content: `You have **${query.repAmount}** reputation.`,
         })
