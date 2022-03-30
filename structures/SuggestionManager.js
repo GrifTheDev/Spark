@@ -186,7 +186,7 @@ class SuggestionManager {
   }
 
   async denySuggestion({ message: message, reason: reason }) {
-    var query = await suggestionEntry.findOne({ _id: this.suggestionId });
+    var query = await suggestionEntry.findOne({ _id: this.suggestionId }).exec();
 
     if (query == null || query == undefined) {
       return await respondWithError({
