@@ -64,6 +64,7 @@ class SuggestionManager {
       _id: this.suggestionId,
       authorName: this.interaction.user.username,
       authorID: this.interaction.user.id,
+      authorPFP: this.interaction.user.displayAvatarURL({ dynamic: true }),
       suggestionStatus: "Pending Review",
       suggestion: suggestion,
       suggestionURL: this.sentMsg.url,
@@ -104,9 +105,7 @@ class SuggestionManager {
     const acceptedEmbed = new MessageEmbed()
       .setAuthor({
         name: `Suggestion by ${query.authorName}`,
-        iconURL: message.guild.members.cache
-          .get(query.authorID)
-          .displayAvatarURL({ dynamic: true })
+        iconURL: query.authorPFP
       })
       .setDescription(`**Suggestion**\n${query.suggestion}`)
       .addField("Status", `${tickEmoji} Approved`)
@@ -207,9 +206,7 @@ class SuggestionManager {
     const denyEmbed = new MessageEmbed()
       .setAuthor({
         name: `Suggestion by ${query.authorName}`,
-        iconURL: message.guild.members.cache
-          .get(query.authorID)
-          .displayAvatarURL({ dynamic: true })
+        iconURL: query.authorPFP
       })
       .setDescription(`**Suggestion**\n${query.suggestion}`)
       .addField("Status", `${XEmoji} Denied`)

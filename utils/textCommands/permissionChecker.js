@@ -83,7 +83,7 @@ async function permissionChecker(commandData, message) {
       }
       break;
     case 6:
-      if (!message.member.roles.cache.has("919687727774052403")) {
+      if (!message.member.roles.cache.has("884800095688745061")) {
         message
           .reply({
             content: `${emojis.XEmoji} Insufficient permissions! Only **Owners (Permission Level 6)** can run this command.`
