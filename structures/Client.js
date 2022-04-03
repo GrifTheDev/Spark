@@ -1,12 +1,20 @@
-const { Client, Collection } = require("discord.js");
-const { prefix, generalChannelId } = require("../config");
+const {
+  Client,
+  Collection,
+  MessageEmbed,
+  MessageActionRow,
+  MessageButton,
+} = require("discord.js");
+const { prefix, generalChannelId, colors, roles } = require("../config");
+const { error_color } = colors;
+const { memberRole } = roles;
 const {
   textCommandLoader,
-  textCommandExecuter
+  textCommandExecuter,
 } = require("../utils/textCommands/textCommand");
 const {
   slashCommandLoader,
-  slashCommandExecuter
+  slashCommandExecuter,
 } = require("../utils/slashCommands/slashCommand");
 const { deployCommands } = require("../utils/slashCommands/deployCommands");
 const { connectDB } = require("../utils/database/connectDB");
@@ -14,7 +22,11 @@ const ReputationManager = require("./ReputationManager");
 const SelectionRoleManager = require("./SelectionRoleManager");
 const AchievementManager = require("./AchievementManager");
 const addMessageCount = require("../utils/addMessageCount");
-const { createRepProfile, createUserProfile, createAchievementProfile } = require("../utils/database/createEntries")
+const {
+  createRepProfile,
+  createUserProfile,
+  createAchievementProfile,
+} = require("../utils/database/createEntries");
 
 class BotClient extends Client {
   constructor(options) {
@@ -29,7 +41,7 @@ class BotClient extends Client {
 
       // Sub-Routine: Set client status
       this.user.setActivity("the All Valley tournament!", {
-        type: "COMPETING"
+        type: "COMPETING",
       });
 
       // Sub-Routine: Load all commands into memory using maps.
@@ -70,21 +82,21 @@ class BotClient extends Client {
       );
     });
 
-    this.on('guildScheduledEventUserAdd', async (interaction, user) => {
+    this.on("guildScheduledEventUserAdd", async (interaction, user) => {
       // passing in user to avoid error
-      await new AchievementManager({ message: interaction }).seeYouThere(user.id)
-
-    })
+      await new AchievementManager({ message: interaction }).seeYouThere(
+        user.id
+      );
+    });
 
     this.on("messageCreate", async (message) => {
-
       if (message.author.bot || !message.guild) return;
       await addMessageCount(message);
-      await createRepProfile({message: message})
-      await createAchievementProfile({message: message})
+      await createRepProfile({ message: message });
+      await createAchievementProfile({ message: message });
 
       new AchievementManager({ message: message }).helloWorld();
-      new AchievementManager({ message: message }).formalities()      
+      new AchievementManager({ message: message }).formalities();
 
       new ReputationManager({ message: message }).givePoints();
 
@@ -110,73 +122,96 @@ class BotClient extends Client {
     this.on("interactionCreate", async (interaction) => {
       if (interaction.isButton()) {
         await interaction.deferReply({
-          ephemeral: true
+          ephemeral: true,
         });
+
+        if (interaction.customId == "verify_button") {
+          await interaction.followUp({
+            embeds: [
+              new MessageEmbed()
+                .setColor("YELLOW")
+                .setDescription(
+                  "Once you verify, you will lose access to the <#957942920902766633> channel. Please ensure you have read this channel before verifying."
+                )
+                .setTitle("Heads Up!"),
+            ],
+            components: [
+              new MessageActionRow().addComponents(
+                new MessageButton()
+                  .setStyle("PRIMARY")
+                  .setLabel("Finish Verification")
+                  .setCustomId("finish_verification_button")
+              ),
+            ],
+          });
+        }
+
+        if (interaction.customId == "finish_verification_button") {
+          await interaction.member.roles.add(memberRole);
+
+          await interaction.followUp({
+            content: "You have been verified! Enjoy chatting in the server.",
+          });
+        }
 
         if (interaction.customId == "pronoun_button") {
           new SelectionRoleManager({
-            button: interaction
+            button: interaction,
           }).sendPronounMenu();
         }
 
         if (interaction.customId == "ping_button") {
           new SelectionRoleManager({
-            button: interaction
-          }).sendPingMenu(); 
+            button: interaction,
+          }).sendPingMenu();
         }
 
         if (interaction.customId == "select_eduLevel") {
           new SelectionRoleManager({
-            button: interaction
+            button: interaction,
           }).sendEducationLevelMenu();
         }
-      }
+      } else if (interaction.isSelectMenu()) {
+        if (interaction.customId.includes("achievement_menu_")) return;
 
-      
- 
-      if (interaction.isSelectMenu()) {
-        if (interaction.customId.includes("achievement_menu_")) return
-        
         await interaction.deferReply({
-          ephemeral: true
+          ephemeral: true,
         });
 
         if (interaction.customId == "choose_pronouns") {
           new SelectionRoleManager({
-            menu: interaction
+            menu: interaction,
           }).asignPronouns();
         }
 
         if (interaction.customId == "choose_pings") {
           new SelectionRoleManager({
-            menu: interaction
+            menu: interaction,
           }).asignPings();
         }
 
         if (interaction.customId == "choose_edu_lvl") {
           new SelectionRoleManager({
-            menu: interaction
+            menu: interaction,
           }).asignEduLvl();
         }
+      } else if (interaction.isCommand()) {
+        const command = this.slashCommands.get(interaction.commandName);
+        if (!command) return;
+
+        slashCommandExecuter(command, this, interaction);
+      } else {
+        return;
       }
-
-      if (!interaction.isCommand()) return;
-
-      const command = this.slashCommands.get(interaction.commandName);
-      if (!command) return;
-
-
-      slashCommandExecuter(command, this, interaction);
     });
 
-    this.on('guildMemberAdd', async (member) => {
-
-      const channelToSendIn = member.guild.channels.cache.get(generalChannelId)
+    this.on("guildMemberAdd", async (member) => {
+      const channelToSendIn = member.guild.channels.cache.get(generalChannelId);
 
       await channelToSendIn.send({
-        content: `:wave: Welcome to the server <@${member.id}>! We hope you have an amazing stay!`
-      })
-    })
+        content: `:wave: Welcome to the server <@${member.id}>! We hope you have an amazing stay!`,
+      });
+    });
   }
 }
 

@@ -56,7 +56,7 @@ module.exports = {
     alertEmoji: "<:alert:949250422491725884>",
   },
   colors: {
-    color: "#0a0724",
+    color: "#ff0080",
     error_color: "#ff3131",
     up_color: "#ffbb1c",
     achievement_gain_color: "#FFD11F",
