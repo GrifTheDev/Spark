@@ -131,7 +131,7 @@ class BotClient extends Client {
               new MessageEmbed()
                 .setColor("YELLOW")
                 .setDescription(
-                  "Once you verify, you will lose access to the <#957942920902766633> channel. Please ensure you have read this channel before verifying."
+                  "Once you verify, you will lose access to the <#957942920902766633> channel. Please ensure you have read that channel before verifying."
                 )
                 .setTitle("Heads Up!"),
             ],
