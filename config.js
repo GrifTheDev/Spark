@@ -1,7 +1,5 @@
 module.exports = {
   token: "",
-  guildId: "884799738682175539",
-  clientId: "909865101329326152",
   boosterRoleId: "899997722600415243",
   prefix: ">",
   permissionLevels: {

@@ -1,6 +1,5 @@
 const { REST } = require("@discordjs/rest");
 const { Routes } = require("discord-api-types/v9");
-const { clientId, guildId } = require("../../config");
 const fs = require("fs");
 const logger = require("../logging/logger");
 
@@ -27,7 +26,7 @@ async function deployCommands(client) {
   try {
     logger.info("Started refreshing application (/) commands.");
 
-    await rest.put(Routes.applicationGuildCommands(clientId, guildId), {
+    await rest.put(Routes.applicationGuildCommands(process.env.clientId, process.env.guildId), {
       body: commands
     });
 
