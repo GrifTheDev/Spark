@@ -27,6 +27,7 @@ const {
   createUserProfile,
   createAchievementProfile,
 } = require("../utils/database/createEntries");
+const logger = require("../utils/logging/logger");
 
 class BotClient extends Client {
   constructor(options) {
@@ -36,7 +37,7 @@ class BotClient extends Client {
     this.slashCommands = new Collection();
 
     this.once("ready", async () => {
-      console.log("[NOTICE] Start-Up :: Logged in, starting up.");
+      logger.info("Logged in, starting up.");
       await connectDB(); // Must connect to database first thing.
 
       // Sub-Routine: Set client status
@@ -48,14 +49,13 @@ class BotClient extends Client {
       try {
         const amountOfCommands = await textCommandLoader(this);
 
-        console.log(
-          `[SUCCESS] Cache Text Commands :: Successfully loaded all text commands (${amountOfCommands}).`
+        logger.info(
+          `Successfully loaded all text commands (${amountOfCommands}).`
         );
       } catch (error) {
-        console.log(error);
 
-        return console.log(
-          "!!! [CRITICAL FAILURE] Cache Text Commands :: Could not load all text commands successfully. Full error:\n\n" +
+        return logger.error(
+          "Could not load all text commands successfully. Full error:\n\n" +
             error
         );
       }
@@ -63,22 +63,21 @@ class BotClient extends Client {
       try {
         const amountOfSlashCommands = await slashCommandLoader(this);
 
-        console.log(
-          `[SUCCESS] Cache Slash Commands :: Successfully loaded all slash commands (${amountOfSlashCommands}).`
+        logger.info(
+          `Successfully loaded all slash commands (${amountOfSlashCommands}).`
         );
       } catch (error) {
-        console.log(error);
 
-        return console.log(
-          "[CRITICAL FAILURE] Cache Slash Commands :: Could not load all slash commands successfully. Full error:\n\n" +
+        return logger.error(
+          "Could not load all slash commands successfully. Full error:\n\n" +
             error
         );
       }
 
       await deployCommands(this);
 
-      console.log(
-        `[SUCCESS] Start-Up :: Client successfully logged in as ${this.user.tag}.`
+      logger.info(
+        `Client successfully logged in as ${this.user.tag}.`
       );
     });
 

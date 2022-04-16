@@ -1,8 +1,9 @@
 const mongoose = require('mongoose')
+const logger = require('../logging/logger')
 
 async function connectDB() {
 
-    console.log("[NOTICE] Connect to Database :: Attempting to connect to the MongoDB database.")
+    logger.info("Attempting to connect to the MongoDB database.")
 
     try {
         // eslint-disable-next-line no-undef
@@ -11,10 +12,10 @@ async function connectDB() {
             useUnifiedTopology: true
         })
 
-        console.log("[SUCCESS] Connect to Database :: Successfully connected to the MongoDB database.")
+        logger.info("Successfully connected to the MongoDB database.")
 
     } catch (error) {
-        console.log("[CRITICAL FAILURE] Connect to Database :: There was an error while trying to connect to the MongoDB database.\n\n" + error)
+        logger.error("There was an error while trying to connect to the MongoDB database.\n\n" + error)
     }
 
     

@@ -23,7 +23,8 @@
     "discord-api-types": "^0.26.1",
     "discord.js": "^13.5.0",
     "dotenv": "^16.0.0",
-    "mongoose": "^6.1.5"
+    "mongoose": "^6.1.5",
+    "winston": "^3.7.2"
   },
   "devDependencies": {
     "eslint": "^8.7.0"
