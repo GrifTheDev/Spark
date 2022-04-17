@@ -120,11 +120,12 @@ class BotClient extends Client {
 
     this.on("interactionCreate", async (interaction) => {
       if (interaction.isButton()) {
-        await interaction.deferReply({
-          ephemeral: true,
-        });
 
         if (interaction.customId == "verify_button") {
+          await interaction.deferReply({
+            ephemeral: true,
+          });
+
           await interaction.followUp({
             embeds: [
               new MessageEmbed()
@@ -145,7 +146,29 @@ class BotClient extends Client {
           });
         }
 
+        if (interaction.customId == "easter_egg") {
+          await interaction.deferReply({
+            ephemeral: true
+          })
+
+          if (!interaction.member.roles.cache.has("965167441879662622")) {
+          await interaction.member.roles.add("965167441879662622")
+
+          await interaction.followUp({
+            content: "You have been given the <@&965167441879662622> role."
+          })
+        } else {
+          await interaction.followUp({
+            content: "You already have the <@&965167441879662622> role."
+          })
+        }
+        }
+
         if (interaction.customId == "finish_verification_button") {
+          await interaction.deferReply({
+            ephemeral: true,
+          });
+
           await interaction.member.roles.add(memberRole);
 
           await interaction.followUp({
@@ -154,18 +177,30 @@ class BotClient extends Client {
         }
 
         if (interaction.customId == "pronoun_button") {
+          await interaction.deferReply({
+            ephemeral: true,
+          });
+
           new SelectionRoleManager({
             button: interaction,
           }).sendPronounMenu();
         }
 
         if (interaction.customId == "ping_button") {
+          await interaction.deferReply({
+            ephemeral: true,
+          });
+
           new SelectionRoleManager({
             button: interaction,
           }).sendPingMenu();
         }
 
         if (interaction.customId == "select_eduLevel") {
+          await interaction.deferReply({
+            ephemeral: true,
+          });
+
           new SelectionRoleManager({
             button: interaction,
           }).sendEducationLevelMenu();

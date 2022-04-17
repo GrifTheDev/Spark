@@ -61,5 +61,17 @@ module.exports = {
         "Wow you go to High School? That's so cool! If only there was a select menu that would allow you to pick your education level. :thinking:"
     })
 
+    const easterRole = new MessageButton()
+    .setLabel("🥚")
+    .setCustomId("easter_egg")
+    .setStyle("SUCCESS")
+
+    const easterRow = new MessageActionRow().addComponents(easterRole)
+
+    message.channel.send({
+      components: [easterRow],
+      content: "Happy Easter! Take this limited time role, to show that you were here!"
+    })
+
   },
 };
