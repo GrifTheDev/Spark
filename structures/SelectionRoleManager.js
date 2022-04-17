@@ -86,7 +86,7 @@ class SelectionRoleManager {
       .setOptions(
         {
           label: "Announcements",
-          emoji: "829394738879791104",
+          emoji: "📣",
           value: "announce",
           description: "Updates, small news and more!",
           default: this.button.member.roles.cache.has(announcements),
@@ -107,7 +107,7 @@ class SelectionRoleManager {
         },
         {
           label: "Events",
-          emoji: "915560566641262642",
+          emoji: "",
           description: "Hosting events!1!!11!",
           value: "events",
           default: this.button.member.roles.cache.has(events),
