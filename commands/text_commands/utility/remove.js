@@ -1,13 +1,12 @@
-const { Message, Client, MessageEmbed } = require("discord.js");
-const { infoMessages } = require("../../../messages/info_messages");
+const { Message, Client } = require("discord.js");
 const { emojis } = require("../../../config");
 const respondWithError = require("../../../utils/error/response");
-const ReputationManager = require("../../../structures/ReputationManager");
+const BitManager = require("../../../structures/BitManager");
 const { loading, tickEmoji } = emojis;
 
 module.exports = {
   name: "remove",
-  desc: "Removes the specified amount of rep from the mentioned member.",
+  desc: "Removes the specified amount of bits from the mentioned member.",
   aliases: ["rm"],
   permissionLevel: 2,
 
@@ -23,7 +22,7 @@ module.exports = {
       message.mentions.members.first() ||
       message.guild.members.cache.get(args[0]);
 
-    const toGive = args[1];
+    const toRemove = args[1];
 
     if (!target) {
       return await respondWithError({
@@ -32,7 +31,7 @@ module.exports = {
       });
     }
 
-    if (!toGive) {
+    if (!toRemove) {
       return await respondWithError({
         message: message,
         errorMessage: "You must specify the amount of reputation to give.",
@@ -42,11 +41,10 @@ module.exports = {
     var res = await message.reply({
         content: `${loading} Removing reputation from **${target.user.tag}**...`
     })
-
-    await new ReputationManager({ toGive: -(Number(toGive)), message: message }).giveCertainRep();
+    await new BitManager().addBits({member: target.user, toAdd: -(Number(toRemove))})
 
     await res.edit({
-        content: `${tickEmoji} Removed **${toGive} reputation** from **${target.user.tag}**.`
+        content: `${tickEmoji} Removed **${toRemove} reputation** from **${target.user.tag}**.`
     })
   },
 };

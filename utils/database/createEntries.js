@@ -1,10 +1,9 @@
-const ReputationManager = require("../../structures/ReputationManager")
 const achievementProfile = require("./schemas/achievements")
 const userProfile = require("./schemas/user")
 const { introductionChannelId } = require("../../config")
 const reputationProfile = require("./schemas/reputation")
 
-async function createRepProfile({ message: message }) {
+async function createBitProfile({ message: message }) {
   const query = await reputationProfile.findOne({ _id: message.author.id }).exec()
   if (query == undefined || query == null) {
     await new ReputationManager({ message: message }).addProfileOnJoin({
@@ -124,6 +123,6 @@ async function createAchievementProfile ({ message: message }) {
 
 module.exports = {
     createUserProfile: createUserProfile,
-    createRepProfile: createRepProfile,
+    createBitProfile: createBitProfile,
     createAchievementProfile: createAchievementProfile
 };

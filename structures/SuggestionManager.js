@@ -4,7 +4,9 @@ const { suggestionChannelId, emojis } = require("../config");
 const { pendingReview, tickEmoji, XEmoji } = emojis;
 const respondWithError = require("../utils/error/response");
 const userProfile = require("../utils/database/schemas/user");
-const AchievementManager = require("./AchievementManager")
+const AchievementManager = require("./AchievementManager");
+const logger = require("../utils/logging/logger");
+const BitManager = require("./BitManager");
 
 class SuggestionManager {
   constructor({
@@ -77,8 +79,8 @@ class SuggestionManager {
     try {
       await createSuggestionDB.save();
     } catch (error) {
-      console.log(
-        `[FAILURE] Save Suggestion DB :: There was an error while trying to save ${this.interaction.user.username}'s suggestion.\n\n${error}`
+      logger.warn(
+        `There was an error while trying to save ${this.interaction.user.username}'s suggestion.\n\n${error}. Approving / denying the suggestion without adding the DB entry manually will cause a crash.`
       );
     }
   }
@@ -138,7 +140,7 @@ class SuggestionManager {
         ]
       });
     } catch (error) {
-      console.log("Could not send a suggestion DM.");
+      logger.warn(`Could not notify ${user.user.tag} about their suggestion approval.\n\n${error}`);
     }
 
     let updateEntry = await suggestionEntry.findOneAndUpdate(
@@ -177,7 +179,9 @@ class SuggestionManager {
         console.log(error)
       }
   
-      await new AchievementManager({message: oldSuggestion}).turningTheGears(user.id)
+      await new AchievementManager({message: oldSuggestion}).turningTheGears(user.user.id)
+
+      await new BitManager().addBits({member: user.user, toAdd: 1})
     }
 
     

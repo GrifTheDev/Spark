@@ -18,16 +18,16 @@ const {
 } = require("../utils/slashCommands/slashCommand");
 const { deployCommands } = require("../utils/slashCommands/deployCommands");
 const { connectDB } = require("../utils/database/connectDB");
-const ReputationManager = require("./ReputationManager");
 const SelectionRoleManager = require("./SelectionRoleManager");
 const AchievementManager = require("./AchievementManager");
 const addMessageCount = require("../utils/addMessageCount");
 const {
-  createRepProfile,
+  createBitProfile,
   createUserProfile,
   createAchievementProfile,
 } = require("../utils/database/createEntries");
 const logger = require("../utils/logging/logger");
+const BitManager = require("./BitManager");
 
 class BotClient extends Client {
   constructor(options) {
@@ -91,13 +91,16 @@ class BotClient extends Client {
     this.on("messageCreate", async (message) => {
       if (message.author.bot || !message.guild) return;
       await addMessageCount(message);
-      await createRepProfile({ message: message });
+      await createBitProfile({ message: message });
       await createAchievementProfile({ message: message });
+
+      await new BitManager().addMessageBits({ member: message.member })
+
+      
 
       new AchievementManager({ message: message }).helloWorld();
       new AchievementManager({ message: message }).formalities();
 
-      new ReputationManager({ message: message }).givePoints();
 
       if (
         message.author.bot ||
@@ -105,7 +108,7 @@ class BotClient extends Client {
         !message.content.toLowerCase().startsWith(prefix)
       )
         return;
-
+        
       const args = message.content.slice(prefix.length).split(/ +/);
       const textCommandName = args.shift().toLowerCase();
       const textCommandEx =
@@ -245,6 +248,8 @@ class BotClient extends Client {
       await channelToSendIn.send({
         content: `:wave: Welcome to the server <@${member.id}>! We hope you have an amazing stay!`,
       });
+
+      
     });
   }
 }

@@ -1,14 +1,13 @@
-const { Message, Client, MessageEmbed } = require("discord.js");
-const { infoMessages } = require("../../../messages/info_messages");
+const { Message, Client } = require("discord.js");
 const { emojis } = require("../../../config");
 const respondWithError = require("../../../utils/error/response");
-const ReputationManager = require("../../../structures/ReputationManager");
+const BitManager = require("../../../structures/BitManager");
 const { loading, tickEmoji } = emojis;
 
 module.exports = {
-  name: "give",
-  desc: "Gives the mentioned member a specified amount of rep.",
-  aliases: ["gv"],
+  name: "add",
+  desc: "Gives the mentioned member a specified amount of bits.",
+  aliases: ["give, a"],
   permissionLevel: 2,
 
   /**
@@ -40,10 +39,10 @@ module.exports = {
     }
 
     var res = await message.reply({
-        content: `${loading} Giving reputation to **${target.user.tag}**...`
+        content: `${loading} Giving bits to **${target.user.tag}**...`
     })
 
-    await new ReputationManager({ toGive: Number(toGive), message: message }).giveCertainRep();
+    await new BitManager().addBits({member: target.user, toAdd: Number(toGive)})
 
     await res.edit({
         content: `${tickEmoji} Gave **${toGive} reputation** to **${target.user.tag}**.`
