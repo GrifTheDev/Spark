@@ -95,13 +95,9 @@ Hey :wave:, you made it! Please, make yourself comfortable, grab a cup of your f
     var serverSpecialitiesTwo = `
 <:empty:890854439475351572>
 <:reputation:925827105818820619> **Reputation**
-> Reputation is the in-house system built to reward active members of the community. Reputation can be gained by being an active and helpful member of our treehouse, but can also be taken away for behaviour that does not uphold our values. For example, submiting a suggestion and having it approved would grant you reputation, but being toxic and getting warned would lead you to losing your reputation. 
->         
-> At certain amounts of reputation you will be given roles which have more permissions then the basic verified role. The perks these roles unlock can be found below. **If you have a certain role and fall below the reputation requirement for having that role it will be taken away from you and you will be notified.**
-> 
-> One of the ways of getting reputation is chatting. For every message sent, you get one point which increases everytime you send a new message and at some point turns into 0.5 reputation. After that you'll be repeating the same cycle again. The catch here is that we want members to chat because they like the community, not just because they want to get a certain role or a certain rank, which is why server members **cannot see the amount of points they have at any moment**.
-> 
-> You can check how much reputation you have by running **/rep** in <#888064585561677854>.
+> Bits are a way to award active members. Bits can be earned by participating in events, having approved suggestions, and chatting.
+> When you chat in the server, there is a 10% chance you will get 0.5 bits. When your suggestions gets approved, you will get 1 bit, and when you participate in events, anywhere between 2.5 - 5 bits.
+> At a certain point, you will be given one of three activity roles, based on the amount of bits you have. Good luck!
 `;
 
     var serverSpecialitiesThree = `

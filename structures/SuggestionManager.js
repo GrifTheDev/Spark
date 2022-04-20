@@ -124,7 +124,7 @@ class SuggestionManager {
     try {
       const DMEmbed = new MessageEmbed()
         .setDescription(
-          `${tickEmoji} Your suggestion in Student Zone has been approved! *(+0.5 Rep)*`
+          `${tickEmoji} Your suggestion in Student Zone has been approved! *(+1 Bit)*`
         )
         .setColor("GREEN");
 
@@ -227,7 +227,7 @@ class SuggestionManager {
     try {
       const DMEmbed = new MessageEmbed()
         .setDescription(
-          `${XEmoji} Your suggestion in Student Zone has been denied. *(+0.5 Rep)*`
+          `${XEmoji} Your suggestion in Student Zone has been denied.`
         )
         .setColor("RED");
 
