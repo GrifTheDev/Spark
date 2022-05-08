@@ -60,7 +60,7 @@ module.exports = {
   },
   logChannelId: "893998571681120266",
   introductionChannelId: "888066458897248257",
-  generalChannelId: "887300124349460530",
+  generalChannelId: "972893592198737920",
   notificationChannelId: "888064641677287454",
   timeToDeleteMessages: 5000, //ms
   botCommandsId: "888064585561677854",
