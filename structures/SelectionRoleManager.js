@@ -78,7 +78,7 @@ class SelectionRoleManager {
     });
   }
 
-  async sendPingMenu() {
+  async sendPingMenu() { 
     const select = new MessageSelectMenu()
       .setCustomId("choose_pings")
       .setMinValues(0)

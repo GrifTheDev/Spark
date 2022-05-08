@@ -2,7 +2,8 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 const { Client, CommandInteraction } = require("discord.js");
 const achievementProfile = require("../../../utils/database/schemas/achievements");
 const { introductionChannelId } = require("../../../config");
-const userProfile = require("../../../utils/database/schemas/user")
+const userProfile = require("../../../utils/database/schemas/user");
+const BitManager = require("../../../structures/BitManager");
 
 module.exports = {
   data: new SlashCommandBuilder()

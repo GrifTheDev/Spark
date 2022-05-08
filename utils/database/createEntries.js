@@ -1,17 +1,7 @@
 const achievementProfile = require("./schemas/achievements")
 const userProfile = require("./schemas/user")
 const { introductionChannelId } = require("../../config")
-const reputationProfile = require("./schemas/reputation")
 
-async function createBitProfile({ message: message }) {
-  const query = await reputationProfile.findOne({ _id: message.author.id }).exec()
-  if (query == undefined || query == null) {
-    await new ReputationManager({ message: message }).addProfileOnJoin({
-        memberId: message.author.id,
-        username: message.author.username
-      })
-  }
-}
 
 async function createUserProfile({ message: message }) {
     const query = await userProfile.findOne({ _id: message.author.id }).exec()
@@ -123,6 +113,5 @@ async function createAchievementProfile ({ message: message }) {
 
 module.exports = {
     createUserProfile: createUserProfile,
-    createBitProfile: createBitProfile,
     createAchievementProfile: createAchievementProfile
 };

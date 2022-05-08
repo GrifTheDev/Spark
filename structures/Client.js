@@ -22,8 +22,6 @@ const SelectionRoleManager = require("./SelectionRoleManager");
 const AchievementManager = require("./AchievementManager");
 const addMessageCount = require("../utils/addMessageCount");
 const {
-  createBitProfile,
-  createUserProfile,
   createAchievementProfile,
 } = require("../utils/database/createEntries");
 const logger = require("../utils/logging/logger");
