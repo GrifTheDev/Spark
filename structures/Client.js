@@ -89,7 +89,6 @@ class BotClient extends Client {
     this.on("messageCreate", async (message) => {
       if (message.author.bot || !message.guild) return;
       await addMessageCount(message);
-      await createBitProfile({ message: message });
       await createAchievementProfile({ message: message });
 
       await new BitManager().addMessageBits({ member: message.member })
