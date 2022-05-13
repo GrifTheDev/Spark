@@ -86,11 +86,11 @@ class BitManager {
 
   async giveRoles({ member: member, bits: bits}) {
 
-    await this.removeAllRoles({ member: member })
-
     if (bits >= 5 && bits < 15 && !member.roles.cache.has(active)) await member.roles.add(chatty)
     if (bits >= 15 && bits < 30 && !member.roles.cache.has(chatty)) await member.roles.add(active)
     if (bits >= 30 && !member.roles.cache.has(regular)) await member.roles.add(regular)
+    
+    await this.removeAllRoles({ member: member })
   
   }
 

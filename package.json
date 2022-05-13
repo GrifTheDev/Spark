@@ -1,6 +1,6 @@
 {
   "name": "spark-hardhat",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Testing version of Spark",
   "main": "index.js",
   "scripts": {
